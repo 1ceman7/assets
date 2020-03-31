@@ -1,0 +1,10 @@
+package com.yize.www.emp.web;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class empController {
+    /*@Autowired
+    private empService empService;*/
+}
