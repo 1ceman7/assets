@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+		http://www.springframework.org/schema/beans/spring-beans-4.0.xsd
+        http://www.springframework.org/schema/mvc 
+        http://www.springframework.org/schema/mvc/spring-mvc-4.0.xsd
+        http://www.springframework.org/schema/context 
+        http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
+
+    <!-- 配置@Controller注解扫描 -->
+    <context:component-scan base-package="com.yize.www.fixed.web">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <context:component-scan base-package="com.yize.www.emp.web">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+
+    <!-- 此处自动扫描aop切点 -->
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+
+    <!-- 注解驱动:替我们自动配置最新版的注解的处理器映射器和处理器适配器-->
+    <mvc:annotation-driven></mvc:annotation-driven>
+
+    <!--避免IE执行AJAX时，返回JSON出现下载文件 -->
+    <!-- 输出对象转JSON支持   -->
+    <bean id="stringConverter" class="org.springframework.http.converter.StringHttpMessageConverter">
+        <property name="supportedMediaTypes">
+            <list>
+                <value>text/plain;charset=UTF-8</value>
+            </list>
+        </property>
+    </bean>
+
+    <bean id="jsonConverter"
+          class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+    </bean>
+    <!-- 启动SpringMVC的注解功能，完成请求和注解POJO的映射 -->
+    <bean
+            class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter">
+        <property name="messageConverters">
+            <list>
+                <ref bean="stringConverter"/>
+                <ref bean="jsonConverter"/>
+            </list>
+        </property>
+    </bean>
+
+
+    <!-- 配置参数数据类型转换器 -->
+    <!--		<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean">
+                <property name="converters">
+                    <set>
+                      <bean class="utils.DateConverter"></bean>
+                    </set>
+                </property>
+            </bean>-->
+
+    <!-- 配置视图解析器
+    作用:在controller中指定页面路径的时候就不用写页面的完整路径名称了,可以直接写页面去掉扩展名的名称
+    -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!-- 真正的页面路径 =  前缀 + 去掉后缀名的页面名称 + 后缀
+        前缀 -->
+        <property name="prefix" value="/assets/"></property>
+        <!-- 后缀 -->
+        <property name="suffix" value=".html"></property>
+    </bean>
+
+    <!-- 异常处理器  -->
+    <!-- 	<bean id="handlerExceptionResolver" class="com.xinboedu.utils.CustomExceptionResolver">
+        </bean> -->
+
+    <!-- 文件上传的解析器  -->
+    <bean id="multipartResolver"
+          class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+        <!-- 设置文件上传的相关属性 -->
+        <!-- 默认编码 -->
+        <property name="defaultEncoding" value="utf-8"/>
+        <!-- 文件大小最大值 -->
+        <property name="maxUploadSize" value="10485760000"/>
+        <!-- 内存中的最大值 -->
+        <property name="maxInMemorySize" value="40960"/>
+    </bean>
+
+
+    <!-- 拦截器 -->
+<!--    <mvc:interceptors>
+        <mvc:interceptor>
+            &lt;!&ndash; **拦截所有页面 &ndash;&gt;
+            <mvc:mapping path="/**"/>
+            &lt;!&ndash; mvc:exclude不拦截的页面 &ndash;&gt;
+            <mvc:exclude-mapping path="/AdminLTE-2.3.2/login.html"/>
+            <mvc:exclude-mapping path="/AdminLTE-2.3.2/css/style.css"/>
+            <mvc:exclude-mapping path="/AdminLTE-2.3.2/js/**"/>
+            <mvc:exclude-mapping path="/AdminLTE-2.3.2/plugins/jQuery/jQuery-2.1.4.min.js"/>
+            &lt;!&ndash; 拦截器工具类的&ndash;&gt;
+            <bean class="com.xinbo.www.utils.AuthInterceptor"></bean>
+        </mvc:interceptor>
+    </mvc:interceptors>-->
+
+    <!-- 自动注册组件 -->
+    <mvc:annotation-driven/>
+    <!-- 访问静态资源 -->
+    <mvc:resources location="/assets" mapping="/**"/>
+
+
+
+</beans>
