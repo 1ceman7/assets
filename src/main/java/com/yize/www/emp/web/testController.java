@@ -16,12 +16,13 @@ public class testController {
     public void setL(String l) {
         L = l;
     }
-
+    //饿汉模式------------------------------------------------
     private testController() {};
     private static testController tt = new testController();
     public static testController getTT(){
         return tt;
     };
+    //-------------------------------------------------------
     public String getEmp(){
        return new String("测试");
     };
