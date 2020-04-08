@@ -1,7 +1,7 @@
 <link href="../../css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
 <script type="text/javascript">
-	$(function() {
+/*	$(function() {
 		$("#query").click(function() {
 			$("form:first").submit();
 		});
@@ -12,7 +12,68 @@
 		top.$('context-msg-text').innerHTML=msg;
 		top.$('hid-action').value="actionName";
 		top.lock.show();
-	}
+	}  */
+	$(function () {
+		$.ajax({
+			url:"/Test_assets/dept/list",
+			method:"POST",
+			/*data:{
+				pageNum: pageNo,
+				pageCount: size
+			},*/
+			success:function (pageModel) {
+				console.log(pageModel);
+				var tb = $("#Ttest1");
+				tb.html('');// 清空 tbody 的所有元素
+				var deptList = pageModel.rows;
+				var appendTd = function (tr, item, prop) {
+					var value = item[prop];
+					var td = $('<td width="13%" height="30">' + value + '</td>');
+					tr.append(td);
+				}
+				for (var i = 0; i < deptList.length; i++){
+					var tr = $('<tr align="center" bgcolor="#FFFFFF">');
+					var td1 = $('<td width="13%" height="30">');
+					appendTd(tr,deptList[i],'id');
+					appendTd(tr,deptList[i],'name');
+					appendTd(tr,deptList[i],'tel');
+					var span = $('<span style="line-height:12px; text-align:center;">');
+					var update = $('<a href="" class="xiu" id="update">修改&nbsp&nbsp</a>');
+					var del = $('<a href="" class="xiu" id="del">&nbsp&nbsp删除</a>');
+					span.append(update);
+					span.find(update).attr("href","/Test_assets/assets/jsps/department/input.html?id="+deptList[i].id);
+					span.append(del);
+					td1.append(span)
+					tr.append(td1);
+					tb.append(tr);
+					/*var id = deptList[i].id;
+					var did= $('<td>'+id+'</td>');
+					var name = deptList[i].name;
+					var DepartmentName = $('<td  width="13%" height="30">'+name+'</td>');
+					var tel = deptList[i].tel;
+					var TelName = $('<td>'+tel+'</td>');
+					tr.append(did);
+					tr.append(DepartmentName);
+					tr.append(TelName);
+					tb.append(tr);*/
+				}
+			}
+		})
+		/*$('#update').on('click',function(){
+			$.ajax({
+				url:"/Test_assets/dept/update",
+				type:"POST",
+				/!*data:{
+                    pageNum: pageNo,
+                    pageCount: size
+                },*!/
+				success:function (data) {
+					alert('提交成功！');
+				}
+			})
+		})*/
+
+	})
 </script>
 <div class="content-right">
 	<div class="content-r-pic_w">
@@ -34,7 +95,7 @@
 						<td width="149"><input type="text" size="18" /></td>
 						<td width="70"><a id="query"> <img
 								src="../../images/can_b_01.gif" border="0" /> </a></td>
-						<td width="70"><a href="input.jsp"><img
+						<td width="70"><a href="/Test_assets/assets/jsps/department/input.html"><img
 								src="../../images/can_b_02.gif" border="0" /> </a></td>
 					</tr>
 				</table>
@@ -52,51 +113,23 @@
 						<td width="16%">电话</td>
 						<td width="16%">操作</td>
 					</tr>
-					<tr align="center" bgcolor="#FFFFFF">
+					<tbody id = "Ttest1">
+					<!--<tr align="center" bgcolor="#FFFFFF" id="zhanShi">
 						<td width="13%" height="30">1</td>
 						<td>销售部</td>
-						<td>010-8888-8888</td>
+						<td>8888-888-888</td>
 						<td>
 							<img src="../../images/icon_3.gif" /> 
 							<span style="line-height:12px; text-align:center;"> 
-								<a href="input.jsp" class="xiu">修改</a>
+								<a href="input.html" class="xiu">修改</a>
 							</span> 
 							<img src="../../images/icon_04.gif" /> 
 							<span style="line-height:12px; text-align:center;"> 
 								<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？当前部门删除后，所有部门内的员工将被删除，同时相关数据也将删除！',318)">删除</a>
 							</span>
 						</td>
-					</tr>
-					<tr align="center" bgcolor="#FFFFFF">
-						<td width="13%" height="30">1</td>
-						<td>采购部</td>
-						<td>010-8888-2222</td>
-						<td>
-							<img src="../../images/icon_3.gif" /> 
-							<span style="line-height:12px; text-align:center;"> 
-								<a href="input.jsp" class="xiu">修改</a>
-							</span> 
-							<img src="../../images/icon_04.gif" /> 
-							<span style="line-height:12px; text-align:center;"> 
-								<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？当前部门删除后，所有部门内的员工将被删除，同时相关数据也将删除！',318)">删除</a>
-							</span>
-						</td>
-					</tr>
-					<tr align="center" bgcolor="#FFFFFF">
-						<td width="13%" height="30">1</td>
-						<td>仓储部</td>
-						<td>010-8888-3333</td>
-						<td>
-							<img src="../../images/icon_3.gif" /> 
-							<span style="line-height:12px; text-align:center;"> 
-								<a href="input.jsp" class="xiu">修改</a>
-							</span> 
-							<img src="../../images/icon_04.gif" /> 
-							<span style="line-height:12px; text-align:center;"> 
-								<a href="javascript:void(0)" class="xiu" onclick="showMsg('是否删除该项数据？当前部门删除后，所有部门内的员工将被删除，同时相关数据也将删除！',318)">删除</a>
-							</span>
-						</td>
-					</tr>
+					</tr>-->
+					</tbody>
 				</table>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 					<tr>

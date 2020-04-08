@@ -13,10 +13,15 @@
         http://www.springframework.org/schema/context/spring-context-4.0.xsd http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
 
     <!-- 配置@Controller注解扫描 -->
+    <!-- 扫描dept层web   -->
+    <context:component-scan base-package="com.yize.www.dept.web">
+        <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
+    </context:component-scan>
+    <!-- 扫描fiexd层web   -->
     <context:component-scan base-package="com.yize.www.fixed.web">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
-
+    <!-- 扫描emp层web   -->
     <context:component-scan base-package="com.yize.www.emp.web">
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>

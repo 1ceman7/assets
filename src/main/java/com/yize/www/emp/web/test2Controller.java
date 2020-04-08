@@ -26,7 +26,7 @@ public class test2Controller {
         //Map部分，迭代器删除指定键值
         Map<String,Object> m = new HashMap<String,Object>();
         m.put("a","a1");
-        m.put("b","b2");
+        m.put("b","b23");
         m.put("c","c3");
         m.put("d","d4");
         System.out.println(m.toString());
