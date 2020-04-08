@@ -32,6 +32,7 @@ public class deptController {
 
         if (deptModel.getId()!=null){
             System.out.println(deptModel.getId());
+
         }else {
             System.out.println("id=null");
         }
