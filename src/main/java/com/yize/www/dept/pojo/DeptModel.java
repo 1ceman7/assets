@@ -7,14 +7,6 @@ public class DeptModel {
 
     private String tel;
 
-    public String getTel() {
-        return tel;
-    }
-
-    public void setTel(String tel) {
-        this.tel = tel;
-    }
-
     public Integer getId() {
         return id;
     }
@@ -31,5 +23,11 @@ public class DeptModel {
         this.name = name == null ? null : name.trim();
     }
 
+    public String getTel() {
+        return tel;
+    }
 
+    public void setTel(String tel) {
+        this.tel = tel == null ? null : tel.trim();
+    }
 }

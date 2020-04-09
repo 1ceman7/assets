@@ -18,24 +18,52 @@ public class deptController {
     private deptService deptService;
     @RequestMapping("list")
     @ResponseBody
-    public PageModel list(DeptQueryModel gqm, PageModel pageModel){
-        Integer count = deptService.getCount(gqm);
+    /*   进入“部门管理”页面后展示所有信息   */
+    public PageModel list(DeptQueryModel dqm, PageModel pageModel){
+        Integer count = deptService.getCount(dqm);
         pageModel.setPageCount(count);
-        List<DeptModel> deptList = deptService.getAll(gqm, pageModel);
+        List<DeptModel> deptList = deptService.getAll(dqm, pageModel);
+
         pageModel.setRows(deptList);
         return pageModel;
     };
 
-    @RequestMapping("update")
-    @ResponseBody
-    public String update(DeptModel deptModel,Integer id){
 
-        if (deptModel.getId()!=null){
-            System.out.println(deptModel.getId());
+    @RequestMapping("update_list")
+    @ResponseBody
+    /*    进入“新建/修改”页面后展示所选中的信息   */
+    public DeptModel update_list(DeptModel deptModel,Integer id){
+        if (id != null){
+            deptModel = deptService.getId(id);
+            System.out.println(deptModel.getName());
 
         }else {
             System.out.println("id=null");
         }
-        return "data";
+        return deptModel;
+    }
+
+    @RequestMapping("save")
+    @ResponseBody
+    public String save(DeptModel deptModel){
+        deptService.save(deptModel);
+        return "saveOk";
+    }
+
+    @RequestMapping("update")
+    @ResponseBody
+    public String update(DeptModel deptModel){
+        System.out.println(deptModel.getId());
+        System.out.println(deptModel.getName());
+        deptService.update(deptModel);
+        return "updateOk";
+    }
+
+    @RequestMapping("del")
+    @ResponseBody
+    public String del(Integer id){
+        System.out.println(id);
+        deptService.del(id);
+        return "delOk";
     }
 }

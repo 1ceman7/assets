@@ -1,79 +1,13 @@
 <link href="../../css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
+<script src="../../js/dept/list.js"></script>
 <script type="text/javascript">
-/*	$(function() {
-		$("#query").click(function() {
-			$("form:first").submit();
-		});
-	});
-	function showMsg(msg,uuid){
-		//top.document.getElementById("context-msg").style.display = "block";
-		top.$('context-msg').style.display = "block";
-		top.$('context-msg-text').innerHTML=msg;
-		top.$('hid-action').value="actionName";
-		top.lock.show();
-	}  */
-	$(function () {
-		$.ajax({
-			url:"/Test_assets/dept/list",
-			method:"POST",
-			/*data:{
-				pageNum: pageNo,
-				pageCount: size
-			},*/
-			success:function (pageModel) {
-				console.log(pageModel);
-				var tb = $("#Ttest1");
-				tb.html('');// 清空 tbody 的所有元素
-				var deptList = pageModel.rows;
-				var appendTd = function (tr, item, prop) {
-					var value = item[prop];
-					var td = $('<td width="13%" height="30">' + value + '</td>');
-					tr.append(td);
-				}
-				for (var i = 0; i < deptList.length; i++){
-					var tr = $('<tr align="center" bgcolor="#FFFFFF">');
-					var td1 = $('<td width="13%" height="30">');
-					appendTd(tr,deptList[i],'id');
-					appendTd(tr,deptList[i],'name');
-					appendTd(tr,deptList[i],'tel');
-					var span = $('<span style="line-height:12px; text-align:center;">');
-					var update = $('<a href="" class="xiu" id="update">修改&nbsp&nbsp</a>');
-					var del = $('<a href="" class="xiu" id="del">&nbsp&nbsp删除</a>');
-					span.append(update);
-					span.find(update).attr("href","/Test_assets/assets/jsps/department/input.html?id="+deptList[i].id);
-					span.append(del);
-					td1.append(span)
-					tr.append(td1);
-					tb.append(tr);
-					/*var id = deptList[i].id;
-					var did= $('<td>'+id+'</td>');
-					var name = deptList[i].name;
-					var DepartmentName = $('<td  width="13%" height="30">'+name+'</td>');
-					var tel = deptList[i].tel;
-					var TelName = $('<td>'+tel+'</td>');
-					tr.append(did);
-					tr.append(DepartmentName);
-					tr.append(TelName);
-					tb.append(tr);*/
-				}
-			}
-		})
-		/*$('#update').on('click',function(){
-			$.ajax({
-				url:"/Test_assets/dept/update",
-				type:"POST",
-				/!*data:{
-                    pageNum: pageNo,
-                    pageCount: size
-                },*!/
-				success:function (data) {
-					alert('提交成功！');
-				}
-			})
-		})*/
-
-	})
+	//进入页面直接调用getAll方法展示数据
+	window.onload=function () {
+		getAll();
+		getQuery();
+		dele();
+	}
 </script>
 <div class="content-right">
 	<div class="content-r-pic_w">
@@ -85,15 +19,15 @@
 		<form action="list.jsp" method="post">
 			<div class="square-o-top">
 				<table width="100%" border="0" cellpadding="0" cellspacing="0"
-					style="font-size:14px; font-weight:bold; font-family:"黑体";">
+					style="font-size:14px; font-weight:bold; font-family:'黑体';">
 					<tr>
 						<td width="68" height="30">&nbsp;&nbsp;&nbsp;</td>
 						<td width="123">&nbsp;</td>
 						<td width="62">部门名称:</td>
-						<td width="142"><input type="text" size="18" /></td>
+						<td width="142"><input type="text" id="queryName" size="18" /></td>
 						<td width="60">电话:</td>
-						<td width="149"><input type="text" size="18" /></td>
-						<td width="70"><a id="query"> <img
+						<td width="149"><input type="text" id="queryTel" size="18" /></td>
+						<td width="70"><a  href="" id="query" onclick=""> <img
 								src="../../images/can_b_01.gif" border="0" /> </a></td>
 						<td width="70"><a href="/Test_assets/assets/jsps/department/input.html"><img
 								src="../../images/can_b_02.gif" border="0" /> </a></td>
@@ -113,6 +47,7 @@
 						<td width="16%">电话</td>
 						<td width="16%">操作</td>
 					</tr>
+				<!------------------  表单数据  ------------------>
 					<tbody id = "Ttest1">
 					<!--<tr align="center" bgcolor="#FFFFFF" id="zhanShi">
 						<td width="13%" height="30">1</td>
@@ -130,6 +65,7 @@
 						</td>
 					</tr>-->
 					</tbody>
+				<!------------------表单数据end------------------>
 				</table>
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 					<tr>
