@@ -30,7 +30,6 @@ public class deptServiceImpl implements deptService {
         example.setStart(pageModel.getStart());
         example.setLimit(pageModel.getPageCount());
         Criteria criteria = example.createCriteria();
-        System.out.println("查询到的信息："+dqm.getName());
         doQuery(dqm,criteria);
         List<DeptModel> deptModels = dmp.selectByExample(example);
         return deptModels;
@@ -50,7 +49,6 @@ public class deptServiceImpl implements deptService {
     @Override
     public DeptModel getId(Integer id) {
         DeptModel deptModel = dmp.selectByPrimaryKey(id);
-
         return deptModel;
     }
 

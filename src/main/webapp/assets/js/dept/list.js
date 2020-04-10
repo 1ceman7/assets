@@ -51,11 +51,12 @@ function getAll() {
 	})
 }
 
+//查询
 function getQuery() {
 	$('#query').live('click','a',function(){
 		var queryName = $('#queryName').val();
 		var queryTel = $('#queryTel').val();
-		alert('输入的名称是：'+queryName);
+		alert('输入的查询信息是：'+queryName+queryTel);
 		// 清空 tbody 的所有元素
 		//tb = $("#Ttest1");
 		// 清空 tbody 的所有元素
@@ -73,7 +74,6 @@ function getQuery() {
 		success:function (pageModel) {
 			var queryList = pageModel.rows;
 			//封装添加数据的方法
-			alert('查询结束')
 			for (var i = 0; i < queryList.length; i++){
 				//将id赋值到全局变量里，删除时使用。
 				qjbl=queryList[i].id;

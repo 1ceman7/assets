@@ -23,7 +23,6 @@ public class deptController {
         Integer count = deptService.getCount(dqm);
         pageModel.setPageCount(count);
         List<DeptModel> deptList = deptService.getAll(dqm, pageModel);
-
         pageModel.setRows(deptList);
         return pageModel;
     };
@@ -36,12 +35,13 @@ public class deptController {
         if (id != null){
             deptModel = deptService.getId(id);
             System.out.println(deptModel.getName());
-
         }else {
             System.out.println("id=null");
         }
         return deptModel;
     }
+
+
 
     @RequestMapping("save")
     @ResponseBody

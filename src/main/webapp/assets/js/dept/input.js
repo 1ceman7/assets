@@ -1,6 +1,6 @@
 //全局变量
 var id = "";
-//展示数据
+//回显数据
 function input_list() {
 		$.ajax({
 			url:"/Test_assets/dept/update_list",
