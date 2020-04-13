@@ -17,6 +17,7 @@ import java.util.List;
 public class deptServiceImpl implements deptService {
     @Autowired
     private DeptModelMapper dmp;
+    //获取总数
     @Override
     public Integer getCount(DeptQueryModel gqm) {
         DeptModelExample example = new DeptModelExample();
@@ -34,7 +35,7 @@ public class deptServiceImpl implements deptService {
         List<DeptModel> deptModels = dmp.selectByExample(example);
         return deptModels;
     }
-
+    //增加查询条件
     private void doQuery(DeptQueryModel dqm,Criteria createCriteria) {
         if(dqm.getName() != null && dqm.getName().trim().length() > 0){
             createCriteria.andNameLike("%" + dqm.getName().trim()+"%");

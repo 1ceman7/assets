@@ -3,16 +3,16 @@ package com.yize.www.utils;
 import java.util.List;
 
 public class PageModel {
-    //第几页
+    //默认第一页
     private int pageNum = 1;
     //显示几条数据
     private int pageCount =5;
     //总数
     private int pageTotal;
-    //页码最大值
+    //页码最大值（总页数）
     private int maxPageNum;
     //从第几条开始，比如第3页减去1 = 2 乘以显示数量10 = 20；从下标20开始显示
-    private int start;
+    private int start ;
     private List rows ;
 
     public int getStart() {
@@ -24,15 +24,21 @@ public class PageModel {
     }
 
     public void setPageTotal(int pageTotal) {
-        if (pageNum < 1){
+        /*if (pageNum < 1){
             this.pageNum = 1 ;
         }else {
             this.pageTotal = pageTotal;
-        }
+        }*/
+        this.pageTotal = pageTotal;
+        //计算最大页码数
+        maxPageNum = (pageTotal + pageCount - 1) / pageCount;
+        //解决pageNum初始化问题
+        if (pageNum < 1)pageNum=1;
+        if (pageNum > maxPageNum) pageNum = maxPageNum;
     }
     public int getMaxPageNum() {
-
-        return (getPageTotal() + getPageCount() - 1) / getPageCount();
+        return maxPageNum;
+        //return (getPageTotal() + getPageCount() - 1) / getPageCount();
     }
 
 

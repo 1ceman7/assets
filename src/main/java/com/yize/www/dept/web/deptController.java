@@ -20,8 +20,11 @@ public class deptController {
     @ResponseBody
     /*   进入“部门管理”页面后展示所有信息   */
     public PageModel list(DeptQueryModel dqm, PageModel pageModel){
-        Integer count = deptService.getCount(dqm);
-        pageModel.setPageCount(count);
+        //获取总数
+        Integer total = deptService.getCount(dqm);
+        pageModel.setPageTotal(total);
+        System.out.println("总数是："+pageModel.getPageTotal());
+        System.out.println("最大页数是："+pageModel.getMaxPageNum());
         List<DeptModel> deptList = deptService.getAll(dqm, pageModel);
         pageModel.setRows(deptList);
         return pageModel;
@@ -37,7 +40,8 @@ public class deptController {
             System.out.println(deptModel.getName());
         }else {
             System.out.println("id=null");
-        }
+        };
+
         return deptModel;
     }
 

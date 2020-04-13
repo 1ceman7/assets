@@ -1,12 +1,16 @@
 <link href="../../css/index.css" rel="stylesheet" type="text/css" />
 <script type="text/javascript" src="../../js/jquery-1.8.3.js"></script>
 <script src="../../js/dept/list.js"></script>
+<script src="../../js/page.js"></script>
 <script type="text/javascript">
+
 	//进入页面直接调用getAll方法展示数据
 	window.onload=function () {
 		getAll();
 		getQuery();
 		dele();
+		page();
+
 	}
 </script>
 <div class="content-right">
@@ -72,7 +76,7 @@
 						<td width="51%">&nbsp;</td>
 						<td width="13%">共24条记录
 						<td width="6%">
-							<a id="fir" class="sye">首&nbsp;&nbsp;页</a>
+							<a id="first" class="sye">首&nbsp;&nbsp;页</a>
 						</td>
 						<td width="6%">
 							<a id="pre" class="sye">上一页</a>
