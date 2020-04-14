@@ -1,22 +1,10 @@
 
 //全局内变量
-/*var qjbl="";
-var tb = "";
-var tr = "";
-//td1
-var td = "";
-//span
-var span = "";
-var pageNum = 1;
-var pageCount = 0;
-*/
 var pageNum = 1;
 var pageCount = 0;
 var maxPageNum = 0;
 var pageTotal = 0;
 function page() {
-
-
 	$('#first').click(function () {
 		pageNum = 1;
 		getAll();
@@ -70,7 +58,6 @@ function page() {
 			$("#next").css("display","inline");
 		}
 	});
-
 	if(maxPageNum == 1)//只有一页
 	{
 		$("#first").css("display","none");

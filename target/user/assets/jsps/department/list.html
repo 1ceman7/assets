@@ -41,7 +41,7 @@
 			<!--"square-o-top"end-->
 			<div class="square-order">
 				<center>
-					<span style="font-size:20px;color:#96D34A;font-weight:bold">没有查找到满足条件的数据！</span>
+					<span style="font-size:20px;color:#96D34A;font-weight:bold" id = "noThing" ></span>
 				</center>
 				<table width="100%" border="1" cellpadding="0" cellspacing="0">
 					<tr align="center"
@@ -74,7 +74,7 @@
 				<table width="100%" border="0" cellpadding="0" cellspacing="0">
 					<tr>
 						<td width="51%">&nbsp;</td>
-						<td width="13%">共24条记录
+						<td width="13%" id="tdTotal">共<span id = "total"></span>条记录</td>
 						<td width="6%">
 							<a id="first" class="sye">首&nbsp;&nbsp;页</a>
 						</td>
@@ -87,7 +87,7 @@
 						<td width="6%">
 							<a id="last" class="sye">末&nbsp;&nbsp;页</a>
 						</td>
-						<td width="12%">当前第<span style="color:red;">1</span>/3页</td>
+						<td width="12%" id="tdIntotal">当前第<span style="color:red;" id = "inTotal"></span>页</td>
 					</tr>
 				</table>
 			</div>
