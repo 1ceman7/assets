@@ -8,6 +8,9 @@ var td1 = "";
 var span = "";
 var update = "";
 var del = "";
+var queryName = "";
+var queryTel = "";
+
 //封装添加数据的方法
 var appendTd = function (tr, item, prop) {
 	var value = item[prop];
@@ -22,9 +25,20 @@ function getAll() {
 		url:"/Test_assets/dept/list",
 		method:"POST",
 		async : false,
+		data:{
+			name:queryName,
+			tel:queryTel,
+			pageNum: pageNum,
+            //pageCount: pageCount
+		},
 		success:function (pageModel) {
 			var deptList = pageModel.rows;
+			pageNum = pageModel.pageNum;
+			maxPageNum = pageModel.maxPageNum;
+			pageTotal = pageModel.pageTotal;
 			tb = $("#Ttest1");
+			$('#total').html(pageTotal);
+			$('#inTotal').html(pageNum+"/"+maxPageNum)
 			// 清空 tbody 的所有元素
 			tb.html('');
 			for (var i = 0; i < deptList.length; i++){
@@ -54,49 +68,11 @@ function getAll() {
 //查询
 function getQuery() {
 	$('#query').live('click','a',function(){
-		var queryName = $('#queryName').val();
-		var queryTel = $('#queryTel').val();
+		queryName = $('#queryName').val();
+		queryTel = $('#queryTel').val();
 		alert('输入的查询信息是：'+queryName+queryTel);
-		// 清空 tbody 的所有元素
-		//tb = $("#Ttest1");
-		// 清空 tbody 的所有元素
-		tb.html('');
-	$.ajax({
-		url:"/Test_assets/dept/list",
-		method:"POST",
-		async : false,
-		data:{
-			name:queryName,
-			tel:queryTel
-            /*pageNum: pageNo,
-            pageCount: size*/
-        },
-		success:function (pageModel) {
-			var queryList = pageModel.rows;
-			//封装添加数据的方法
-			for (var i = 0; i < queryList.length; i++){
-				//将id赋值到全局变量里，删除时使用。
-				qjbl=queryList[i].id;
-				tr = $('<tr align="center" bgcolor="#FFFFFF">');
-				td1 = $('<td width="13%" height="30">');
-				span = $('<span style="line-height:12px; text-align:center;">');
-				update = $('<a href="" class="xiu" id="update">修改&nbsp&nbsp</a>');
-				del = $('<a href="" class="xiu" id="dele" onclick="">删除</a>');
-				//将"修改、删除“的按钮添加到span中
-				span.append(update);
-				span.find(update).attr("href","/Test_assets/assets/jsps/department/input.html?id="+queryList[i].id);
-				span.append(del);
-				td1.append(span);
-				//添加数据
-				appendTd(tr,queryList[i],'id');
-				appendTd(tr,queryList[i],'name');
-				appendTd(tr,queryList[i],'tel');
-				tr.append(td1);
-				tb.append(tr);
-			}
-		}
+		getAll();
 	})
-})
 }
 
 //删除

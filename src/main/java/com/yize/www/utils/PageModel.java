@@ -6,7 +6,7 @@ public class PageModel {
     //默认第一页
     private int pageNum = 1;
     //显示几条数据
-    private int pageCount =5;
+    private int pageCount =10;
     //总数
     private int pageTotal;
     //页码最大值（总页数）
