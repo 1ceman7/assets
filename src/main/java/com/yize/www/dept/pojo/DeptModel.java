@@ -30,4 +30,13 @@ public class DeptModel {
     public void setTel(String tel) {
         this.tel = tel == null ? null : tel.trim();
     }
+
+    @Override
+    public String toString() {
+        return "DeptModel{" +
+                "id=" + id +
+                ", name='" + name + '\'' +
+                ", tel='" + tel + '\'' +
+                '}';
+    }
 }

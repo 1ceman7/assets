@@ -14,14 +14,14 @@ var total = "";
 var inTotal = "";
 var num = "";
 
-//封装添加数据的方法
+/* 封装添加数据的方法 */
 var appendTd = function (tr, item, prop) {
 	var value = item[prop];
 	var td = $('<td width="13%" height="30">' + value + '</td>');
 	tr.append(td);
 }
 
-	//展示数据
+	/* 展示数据 */
 function getAll() {
 	$.ajax({
 		url:"/Test_assets/dept/list",
@@ -45,11 +45,10 @@ function getAll() {
 
 			if (num == 0){
 				$("#noThing").html('没有查找到满足条件的数据！');
-
 				/*$("#tdTotal").css("display","none");
 				$("#tdIntotal").css("display","none");*/
 			}
-		/* 清空 tbody 的所有元素*/
+		/* 清空 tbody 的所有元素 */
 			tb = $("#Ttest1");
 			tb.html('');
 			total.html(pageTotal);
@@ -57,19 +56,19 @@ function getAll() {
 
 		/* 为字段赋值*/
 			for (var i = 0; i < deptList.length; i++){
-				//将id赋值到全局变量里，做删除功能时会用到。
+			//将id赋值到全局变量里，做删除功能时会用到。
 				qjbl = deptList[i].id;
 				tr = $('<tr align="center" bgcolor="#FFFFFF">');
 				td1 = $('<td width="13%" height="30">');
 				span = $('<span style="line-height:12px; text-align:center;">');
 				update = $('<a href="" class="xiu" id="update">修改&nbsp&nbsp</a>');
 				del = $('<a href="" class="xiu" id="dele" onclick="">删除</a>');
-				//将"修改、删除“的按钮添加到span中
+			//将"修改、删除“的按钮添加到span中
 				span.append(update);
 				span.find(update).attr("href","/Test_assets/assets/jsps/department/input.html?id="+deptList[i].id);
 				span.append(del);
 				td1.append(span);
-				//添加数据
+			//添加数据
 				appendTd(tr,deptList[i],'id');
 				appendTd(tr,deptList[i],'name');
 				appendTd(tr,deptList[i],'tel');
