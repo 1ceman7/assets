@@ -21,7 +21,6 @@ public class deptServiceImpl implements deptService {
     @Override
     public Integer getCount(DeptQueryModel gqm) {
         DeptModelExample example = new DeptModelExample();
-        Criteria criteria = example.createCriteria();
         return dmp.countByExample(example);
     }
 

@@ -52,10 +52,10 @@
 		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
 	</bean>
 	<!-- 扫描emp层mapper   -->
-    <!--<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
         <property name="basePackage" value="com.yize.www.emp.mapper" />
         <property name="sqlSessionFactoryBeanName" value="sqlSessionFactory"></property>
-    </bean>-->
+    </bean>
 
 	<!-- (事务管理)transaction manager, use JtaTransactionManager for global tx -->
 	<bean id="transactionManager"
