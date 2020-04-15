@@ -30,8 +30,6 @@ public class deptController {
         return pageModel;
     }
 
-    ;
-
 
     @RequestMapping("update_list")
     @ResponseBody
@@ -43,8 +41,6 @@ public class deptController {
         } else {
             System.out.println("id=null");
         }
-        ;
-
         return deptModel;
     }
 
