@@ -73,6 +73,7 @@
     id, name, tel, gender, email, inTime, outTime, deptId
   </sql>
   <select id="selectByExample" resultMap="BaseResultMap" parameterType="com.yize.www.emp.pojo.EmpModelExample" >
+
     select
     <if test="distinct" >
       distinct
@@ -255,4 +256,29 @@
       deptId = #{deptid,jdbcType=INTEGER}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+
+
+  <resultMap id="empAndDept" type="com.yize.www.emp.pojo.EmpModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <result column="gender" property="gender" jdbcType="INTEGER" />
+    <result column="email" property="email" jdbcType="VARCHAR" />
+    <result column="inTime" property="intime" jdbcType="DATE" />
+    <result column="outTime" property="outtime" jdbcType="DATE" />
+    <result column="deptId" property="deptid" jdbcType="INTEGER" />
+    <association property="dm" javaType="com.yize.www.dept.pojo.DeptModel">
+      <id column="did" property="id"/>
+      <result column="deptName" property="name"/>
+    </association>
+  </resultMap>
+  <select id="getEmpAndDept" resultMap="empAndDept" parameterType="com.yize.www.emp.pojo.EmpModelExample" >
+    select e.*,d.id did,d.name deptName from
+    emp e inner join dept d on e.deptId = d.id;
+
+    /*select e.*,d.id did,d.name deptName from
+    emp e,dept d where e.deptId = d.id;*/
+  </select>
+
 </mapper>

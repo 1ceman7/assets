@@ -29,8 +29,11 @@ public class empServiceImpl implements empService{
         example.setStart(pageModel.getStart());
         example.setLimit(pageModel.getPageCount());
         Criteria criteria = example.createCriteria();
-
+        /*去重*/
+        //example.setDistinct(true);
+        System.out.println("到这");
         List<EmpModel> empAndDept = empModelMapper.getEmpAndDept(example);
+        System.out.println("出来!!!!!");
         empAndDept.forEach(System.out::println);
 
         return empAndDept;

@@ -8,6 +8,8 @@ import org.apache.ibatis.annotations.Param;
 public interface EmpModelMapper {
     int countByExample(EmpModelExample example);
 
+    List<EmpModel> getEmpAndDept(EmpModelExample example);
+
     int deleteByExample(EmpModelExample example);
 
     int deleteByPrimaryKey(Integer id);
@@ -28,5 +30,5 @@ public interface EmpModelMapper {
 
     int updateByPrimaryKey(EmpModel record);
 
-    List<EmpModel> getEmpAndDept(EmpModelExample example);
+
 }

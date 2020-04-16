@@ -30,7 +30,7 @@ function getAll() {
 		data:{
 			/*name:queryName,
 			tel:queryTel,*/
-			pageNum: pageNum,
+			//pageNum: pageNum,
             //pageCount: pageCount
 		},
 		success:function (pageModel) {
