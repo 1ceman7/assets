@@ -7,7 +7,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class EmpModel {
-    //数据字典
+    /*-----------------------数据字典-----------------------------*/
     public static final Integer CUSTOMER_GENDER_MAN = 1;
     public static final Integer CUSTOMER_GENDER_WOMAN = 0;
 
@@ -15,10 +15,21 @@ public class EmpModel {
     public static final String CUSTOMER_GENDER_WOMAN_VIEW = "女";
 
     public static final Map<Integer, String> GENDER_MAP = new HashMap<Integer, String>();
-    static{
+
+    static {
         GENDER_MAP.put(CUSTOMER_GENDER_MAN, CUSTOMER_GENDER_MAN_VIEW);
         GENDER_MAP.put(CUSTOMER_GENDER_WOMAN, CUSTOMER_GENDER_WOMAN_VIEW);
     }
+    private String genderView;
+    public String getGenderView() {
+        return genderView;
+    }
+    /*----------------------------------------------------------*/
+    public void setGender(Integer gender) {
+        this.gender = gender;
+        this.genderView = GENDER_MAP.get(gender);
+    }
+
     private Integer id;
 
     private String name;
@@ -34,7 +45,7 @@ public class EmpModel {
     private Date outtime;
 
     private Integer deptid;
-
+/*----------------   多对一   --------------------------------*/
     private DeptModel dm;
 
     public DeptModel getDm() {
@@ -44,6 +55,8 @@ public class EmpModel {
     public void setDm(DeptModel dm) {
         this.dm = dm;
     }
+
+/*-----------------------------------------------------------*/
 
     public Integer getId() {
         return id;
@@ -71,10 +84,6 @@ public class EmpModel {
 
     public Integer getGender() {
         return gender;
-    }
-
-    public void setGender(Integer gender) {
-        this.gender = gender;
     }
 
     public String getEmail() {

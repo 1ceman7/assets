@@ -3,6 +3,9 @@ package com.yize.www.dept.mapper;
 import com.yize.www.dept.pojo.DeptModel;
 import com.yize.www.dept.pojo.DeptModelExample;
 import java.util.List;
+
+import com.yize.www.emp.pojo.EmpModel;
+import com.yize.www.emp.pojo.EmpModelExample;
 import org.apache.ibatis.annotations.Param;
 
 public interface DeptModelMapper {
@@ -27,4 +30,5 @@ public interface DeptModelMapper {
     int updateByPrimaryKeySelective(DeptModel record);
 
     int updateByPrimaryKey(DeptModel record);
+
 }

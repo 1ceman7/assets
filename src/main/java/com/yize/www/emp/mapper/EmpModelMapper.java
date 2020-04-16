@@ -27,4 +27,6 @@ public interface EmpModelMapper {
     int updateByPrimaryKeySelective(EmpModel record);
 
     int updateByPrimaryKey(EmpModel record);
+
+    List<EmpModel> getEmpAndDept(EmpModelExample example);
 }
