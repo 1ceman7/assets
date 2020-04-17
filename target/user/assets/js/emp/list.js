@@ -74,7 +74,7 @@ function getAll() {
 				appendTd(tr,empList[i],'email');
 				appendTd(tr,empList[i],'intime');
 				appendTd(tr,empList[i],'outtime');
-				appendTd(tr,empList[i].dm.name,'dm');
+				appendTd(tr,empList[i].dm,'name');
 				tr.append(td1);
 				tb.append(tr);
 
