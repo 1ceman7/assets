@@ -7,6 +7,7 @@ import com.yize.www.emp.pojo.EmpModelExample.Criteria;
 import com.yize.www.emp.pojo.EmpQueryModel;
 import com.yize.www.utils.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -31,9 +32,7 @@ public class empServiceImpl implements empService{
         Criteria criteria = example.createCriteria();
         /*去重*/
         //example.setDistinct(true);
-        System.out.println("到这");
         List<EmpModel> empAndDept = empModelMapper.getEmpAndDept(example);
-        System.out.println("出来!!!!!");
         empAndDept.forEach(System.out::println);
 
         return empAndDept;

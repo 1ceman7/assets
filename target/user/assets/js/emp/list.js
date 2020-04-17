@@ -13,7 +13,7 @@ var queryTel = "";
 var total = "";
 var inTotal = "";
 var num = "";
-
+var dep = "";
 /* 封装添加数据的方法 */
 var appendTd = function (tr, item, prop) {
 	var value = item[prop];
@@ -21,7 +21,7 @@ var appendTd = function (tr, item, prop) {
 	tr.append(td);
 }
 
-	/* 展示数据 */
+/* 展示数据 */
 function getAll() {
 	$.ajax({
 		url:"/Test_assets/emp/list",
@@ -34,14 +34,14 @@ function getAll() {
             //pageCount: pageCount
 		},
 		success:function (pageModel) {
-			var deptList = pageModel.rows;
+			var empList = pageModel.rows;
 			pageNum = pageModel.pageNum;
 			maxPageNum = pageModel.maxPageNum;
 			pageTotal = pageModel.pageTotal;
 		/* 查询时无数据展示提示，和底边栏”共几条”数据 */
 			total = $('#total');
 			inTotal = $('#inTotal');
-			num = deptList.length;
+			num = empList.length;
 			if (num == 0){
 				$("#noThing").html('没有查找到满足条件的数据！');
 			}
@@ -53,9 +53,9 @@ function getAll() {
 			inTotal.html(pageNum+"/"+maxPageNum);
 
 		/* 为字段赋值*/
-			for (var i = 0; i < deptList.length; i++){
+			for (var i = 0; i < empList.length; i++){
 			//将id赋值到全局变量里，做删除功能时会用到。
-				qjbl = deptList[i].id;
+				qjbl = empList[i].id;
 				tr = $('<tr align="center" bgcolor="#FFFFFF">');
 				td1 = $('<td width="13%" height="30">');
 				span = $('<span style="line-height:12px; text-align:center;">');
@@ -63,16 +63,25 @@ function getAll() {
 				del = $('<a href="" class="xiu" id="dele" onclick="">删除</a>');
 			//将"修改、删除“的按钮添加到span中
 				span.append(update);
-				span.find(update).attr("href","/Test_assets/assets/jsps/department/input.html?id="+deptList[i].id);
+				span.find(update).attr("href","/Test_assets/assets/jsps/department/input.html?id="+empList[i].id);
 				span.append(del);
 				td1.append(span);
 			//添加数据
-				appendTd(tr,deptList[i],'id');
-				appendTd(tr,deptList[i],'name');
-				appendTd(tr,deptList[i],'tel');
+				appendTd(tr,empList[i],'id');
+				appendTd(tr,empList[i],'name');
+				appendTd(tr,empList[i],'genderView');
+				appendTd(tr,empList[i],'tel');
+				appendTd(tr,empList[i],'email');
+				appendTd(tr,empList[i],'intime');
+				appendTd(tr,empList[i],'outtime');
+				appendTd(tr,empList[i].dm.name,'dm');
 				tr.append(td1);
 				tb.append(tr);
 
+				/*private Date intime;
+				private Date outtime;
+				private Integer deptid;
+				private DeptModel dm;*/
 			}
 		}
 	})

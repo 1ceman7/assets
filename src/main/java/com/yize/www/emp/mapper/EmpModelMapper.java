@@ -4,7 +4,9 @@ import com.yize.www.emp.pojo.EmpModel;
 import com.yize.www.emp.pojo.EmpModelExample;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
+import org.springframework.stereotype.Repository;
 
+@Repository
 public interface EmpModelMapper {
     int countByExample(EmpModelExample example);
 

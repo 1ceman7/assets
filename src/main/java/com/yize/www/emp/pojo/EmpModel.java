@@ -117,4 +117,20 @@ public class EmpModel {
     public void setDeptid(Integer deptid) {
         this.deptid = deptid;
     }
+
+    @Override
+    public String toString() {
+        return "EmpModel{" +
+                "genderView='" + genderView + '\'' +
+                ", id=" + id +
+                ", name='" + name + '\'' +
+                ", tel='" + tel + '\'' +
+                ", gender=" + genderView +
+                ", email='" + email + '\'' +
+                ", intime=" + intime + '\'' +
+                ", outtime=" + outtime + '\'' +
+                ", deptid=" + deptid + '\'' +
+                ", dm=" + dm.getId() + dm.getName() +
+                '}';
+    }
 }
