@@ -1,6 +1,7 @@
 //全局内变量
 var qjbl="";
 var tb = "";
+var td = "";
 var tr = "";
 //td1 装"修改"和"删除"按钮
 var td1 = "";
@@ -13,12 +14,29 @@ var queryTel = "";
 var total = "";
 var inTotal = "";
 var num = "";
-var dep = "";
+var outTime = "";
 /* 封装添加数据的方法 */
 var appendTd = function (tr, item, prop) {
 	var value = item[prop];
-	var td = $('<td width="5%" height="30">' + value + '</td>');
+	td = $('<td width="8%" height="30">' + value + '</td>');
 	tr.append(td);
+}
+//修改日期格式
+function getLocalTime(jsondate) {
+	jsondate=""+jsondate+"";//因为jsonDate是number型的indexOf会报错
+	if (jsondate.indexOf("+") > 0) {
+		jsondate = jsondate.substring(0, jsondate.indexOf("+"));
+	}
+	else if (jsondate.indexOf("-") > 0) {
+		jsondate = jsondate.substring(0, jsondate.indexOf("-"));
+	}
+	var date = new Date(parseInt(jsondate, 10));
+	var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
+	var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
+	var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
+	var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
+	var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
+	return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
 }
 
 /* 展示数据 */
@@ -35,6 +53,7 @@ function getAll() {
 		},
 		success:function (pageModel) {
 			var empList = pageModel.rows;
+			var empId = empList.id;
 			pageNum = pageModel.pageNum;
 			maxPageNum = pageModel.maxPageNum;
 			pageTotal = pageModel.pageTotal;
@@ -46,13 +65,37 @@ function getAll() {
 				$("#noThing").html('没有查找到满足条件的数据！');
 			}
 		/* 清空 tbody 的所有元素 */
-			tb = $("#empTd");
+			tb = $("#dg");
 			tb.html('');
-
 			total.html(pageTotal);
 			inTotal.html(pageNum+"/"+maxPageNum);
+				tb.datagrid({
+					data:
+						 empList,
+					columns:[[
+						{field:'id',title:'编号',width:'5%',align:"center"},
+						{field:'name',title:'姓名',width:'12%',align:"center"},
+						{field:'tel',title:'电话',width:'15%',align:"center"},
+						{field:'genderView',title:'性别',width:'5%',align:"center"},
+						{field:'email',title:'email',width:'20%',align:"center"},
+						{field:'intime',title:'入职时间',width:'15%',align:"center"},
+						{field:'outtime',title:'离职时间',width:'15%',align:"center", formatter: function( value ) {
+								if( !value ) {
+									return '在职'
+								}
+								return value
+							}},
+						{field:'123',title:'操作',width:'15.5%',align:"center", formatter: function( value,row,index) {
+								var url ='/Test_assets/assets/jsps/department/input.html';
+								var str  ='<a href='+url+'?id='+row.id+' class="xiu">修改</a>&nbsp;&nbsp;' +
+									'<a href="javascript:void(0)" id="del" onclick="dele('+row.id+')" class="xiu"  >删除</a>'
+								return str ;
+							}}
 
-		/* 为字段赋值*/
+					]]
+				});
+
+		/*/!* 为字段赋值*!/
 			for (var i = 0; i < empList.length; i++){
 			//将id赋值到全局变量里，做删除功能时会用到。
 				qjbl = empList[i].id;
@@ -73,16 +116,11 @@ function getAll() {
 				appendTd(tr,empList[i],'tel');
 				appendTd(tr,empList[i],'email');
 				appendTd(tr,empList[i],'intime');
-				appendTd(tr,empList[i],'outtime');
+				appendTd(tr,empList[i],'outTimeView');
 				appendTd(tr,empList[i].dm,'name');
 				tr.append(td1);
 				tb.append(tr);
-
-				/*private Date intime;
-				private Date outtime;
-				private Integer deptid;
-				private DeptModel dm;*/
-			}
+			}*/
 		}
 	})
 }
@@ -98,15 +136,15 @@ function getQuery() {
 }
 
 	//删除
-function dele() {
-	$('#dele').live('click','a',function(){
+function dele(data) {
+	/*$('#dele').live('click','a',function(){*/
 		var c = confirm("是否确定删除")//按确认和取消输出不同的内容
 		if(c ==true){
 			$.ajax({
 				url:"/Test_assets/dept/del",
 				method:"POST",
 				data:{
-					id:qjbl
+					id:data
 				},
 				success:function (data) {
 					alert('删除成功,点击确定跳转页面');
@@ -117,6 +155,6 @@ function dele() {
                window.location.href = "list.html";
 		}
 
-	})
+	/*})*/
 }
 

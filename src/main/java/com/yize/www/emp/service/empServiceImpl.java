@@ -7,7 +7,6 @@ import com.yize.www.emp.pojo.EmpModelExample.Criteria;
 import com.yize.www.emp.pojo.EmpQueryModel;
 import com.yize.www.utils.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -18,6 +17,7 @@ import java.util.List;
 public class empServiceImpl implements empService{
     @Autowired
     private EmpModelMapper empModelMapper;
+
     @Override
     public Integer getCount(EmpQueryModel eqm) {
         EmpModelExample example = new EmpModelExample();
@@ -32,8 +32,20 @@ public class empServiceImpl implements empService{
         Criteria criteria = example.createCriteria();
         /*去重*/
         //example.setDistinct(true);
+        //查询数据
         List<EmpModel> empAndDept = empModelMapper.getEmpAndDept(example);
-        empAndDept.forEach(System.out::println);
+        /*for (int i=0 ; i<empAndDept.size();i++){
+            //离职时间为空视图赋值”在职“，不为空赋值日期
+            if (empAndDept.get(i).getOuttime()==null){
+                empAndDept.get(i).setOutTimeView("在职");
+            }else{
+                SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+                String time = sdf.format(empAndDept.get(i).getOuttime());
+                empAndDept.get(i).setOutTimeView(time);
+            }
+        }*/
+        empAndDept.forEach(emp -> System.out.println(emp));
+        //empAndDept.forEach(System.out::println);
 
         return empAndDept;
     }

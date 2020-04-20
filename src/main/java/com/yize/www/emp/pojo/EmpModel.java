@@ -1,6 +1,8 @@
 package com.yize.www.emp.pojo;
 
+import com.fasterxml.jackson.annotation.JsonFormat;
 import com.yize.www.dept.pojo.DeptModel;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import java.util.Date;
 import java.util.HashMap;
@@ -39,9 +41,11 @@ public class EmpModel {
     private Integer gender;
 
     private String email;
-
+    //入职时间
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date intime;
-
+    //离职时间
+    @DateTimeFormat(pattern="yyyy-MM-dd")
     private Date outtime;
 
     private Integer deptid;
@@ -57,6 +61,7 @@ public class EmpModel {
     }
 
 /*-----------------------------------------------------------*/
+
 
     public Integer getId() {
         return id;
@@ -94,6 +99,7 @@ public class EmpModel {
         this.email = email == null ? null : email.trim();
     }
 
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     public Date getIntime() {
         return intime;
     }
@@ -101,7 +107,7 @@ public class EmpModel {
     public void setIntime(Date intime) {
         this.intime = intime;
     }
-
+    @JsonFormat(timezone = "GMT+8", pattern = "yyyy-MM-dd")
     public Date getOuttime() {
         return outtime;
     }
