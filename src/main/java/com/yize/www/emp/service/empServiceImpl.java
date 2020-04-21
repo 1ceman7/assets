@@ -49,4 +49,9 @@ public class empServiceImpl implements empService{
 
         return empAndDept;
     }
+
+    @Override
+    public void del(Integer id) {
+        empModelMapper.deleteByPrimaryKey(id);
+    }
 }

@@ -31,4 +31,11 @@ public class empController {
     };
 
 
+    @RequestMapping("del")
+    @ResponseBody
+    public String del(Integer id) {
+        System.out.println(id);
+        empService.del(id);
+        return "delOk";
+    }
 }

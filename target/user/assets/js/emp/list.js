@@ -1,42 +1,20 @@
 //全局内变量
-var qjbl="";
 var tb = "";
 var td = "";
 var tr = "";
 //td1 装"修改"和"删除"按钮
 var td1 = "";
-//span 装td1
 var span = "";
-var update = "";
-var del = "";
 var queryName = "";
 var queryTel = "";
 var total = "";
 var inTotal = "";
 var num = "";
-var outTime = "";
 /* 封装添加数据的方法 */
 var appendTd = function (tr, item, prop) {
 	var value = item[prop];
 	td = $('<td width="8%" height="30">' + value + '</td>');
 	tr.append(td);
-}
-//修改日期格式
-function getLocalTime(jsondate) {
-	jsondate=""+jsondate+"";//因为jsonDate是number型的indexOf会报错
-	if (jsondate.indexOf("+") > 0) {
-		jsondate = jsondate.substring(0, jsondate.indexOf("+"));
-	}
-	else if (jsondate.indexOf("-") > 0) {
-		jsondate = jsondate.substring(0, jsondate.indexOf("-"));
-	}
-	var date = new Date(parseInt(jsondate, 10));
-	var month = date.getMonth() + 1 < 10 ? "0" + (date.getMonth() + 1) : date.getMonth() + 1;
-	var currentDate = date.getDate() < 10 ? "0" + date.getDate() : date.getDate();
-	var hours = date.getHours() < 10 ? "0" + date.getHours() : date.getHours();
-	var minutes = date.getMinutes() < 10 ? "0" + date.getMinutes() : date.getMinutes();
-	var seconds = date.getSeconds() < 10 ? "0" + date.getSeconds() : date.getSeconds();
-	return date.getFullYear() + "-" + month + "-" + currentDate + " " + hours + ":" + minutes + ":" + seconds;
 }
 
 /* 展示数据 */
@@ -137,11 +115,10 @@ function getQuery() {
 
 	//删除
 function dele(data) {
-	/*$('#dele').live('click','a',function(){*/
 		var c = confirm("是否确定删除")//按确认和取消输出不同的内容
 		if(c ==true){
 			$.ajax({
-				url:"/Test_assets/dept/del",
+				url:"/Test_assets/emp/del",
 				method:"POST",
 				data:{
 					id:data
@@ -155,6 +132,30 @@ function dele(data) {
                window.location.href = "list.html";
 		}
 
-	/*})*/
 }
 
+	//部门查询下拉框
+function onLoadRead() {
+		$.ajax({
+			type:"post",
+			url:"/Test_assets/dept/list",
+			dataType:"json",
+			async:true,
+			cache:false,//不缓存
+			timeout:5000,
+			success:function(pageModel)
+			{
+				if(pageModel)
+				{
+					var deptList = pageModel.rows;
+					$("#queryDept").append("<option selected='selected' value='0'>请选择</option>");
+					for(var i=0;i<deptList.length;i++)
+					{
+						$("#queryDept").append("<option value='"+deptList[i].name+"'>"+deptList[i].name+"</option>");
+					}
+				}else{
+					alert("加载失败")
+				}
+			},
+		});
+}

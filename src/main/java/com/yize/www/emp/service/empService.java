@@ -11,4 +11,6 @@ public interface empService {
 
     List<EmpModel> getAll(EmpQueryModel eqm, PageModel pageModel);
 
+    void del(Integer id);
+
 }
