@@ -273,12 +273,29 @@
       <result column="deptName" property="name"/>
     </association>
   </resultMap>
-  <select id="getEmpAndDept" resultMap="empAndDept" parameterType="com.yize.www.emp.pojo.EmpModelExample" >
-    select e.*,d.id did,d.name deptName from
-    emp e inner join dept d on e.deptId = d.id;
-
+  <select id="getEmpAndDept" resultMap="empAndDept"
+          parameterType="com.yize.www.emp.pojo.EmpModel"
+          resultType="com.yize.www.emp.pojo.EmpModel">
     /*select e.*,d.id did,d.name deptName from
-    emp e,dept d where e.deptId = d.id;*/
+    emp e inner join dept d on e.deptId = d.id*/
+    select e.*,d.id did,d.name deptName from
+    emp e,dept d where e.deptId = d.id
+    <if test="deptid != null ">
+      and e.deptId=#{deptid,jdbcType=INTEGER}
+    </if>
+    <if test="name!=null and name!=''">
+      and e.name like concat('%',#{name},'%')
+    </if>
+    <if test="tel!=null and tel!=''">
+      and e.tel like concat('%',#{tel},'%')
+    </if>
+    <if test="gender!=null">
+      and gender = #{gender }
+    </if>
   </select>
 
+  <select id="getDeptCount" parameterType="com.yize.www.emp.pojo.EmpModel" resultType="java.lang.Integer" >
+      select count(*) from emp
+      where deptId = #{id}
+  </select>
 </mapper>

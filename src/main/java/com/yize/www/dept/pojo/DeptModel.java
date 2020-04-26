@@ -1,11 +1,25 @@
 package com.yize.www.dept.pojo;
 
+import com.yize.www.emp.pojo.EmpModel;
+
+import java.util.List;
+
 public class DeptModel {
     private Integer id;
 
     private String name;
 
     private String tel;
+    //对订单的一对多
+    private List<EmpModel> EmpList;
+
+    public List<EmpModel> getEmpList() {
+        return EmpList;
+    }
+
+    public void setEmpList(List<EmpModel> empList) {
+        EmpList = empList;
+    }
 
     public Integer getId() {
         return id;

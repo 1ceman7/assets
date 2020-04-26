@@ -13,4 +13,5 @@ public interface empService {
 
     void del(Integer id);
 
+    Integer getDeptCount(Integer id);
 }

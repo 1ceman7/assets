@@ -1,7 +1,9 @@
 package com.yize.www.dept.web;
+
 import com.yize.www.dept.pojo.DeptModel;
 import com.yize.www.dept.pojo.DeptQueryModel;
 import com.yize.www.dept.service.deptService;
+import com.yize.www.emp.service.empService;
 import com.yize.www.utils.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -15,6 +17,8 @@ import java.util.List;
 public class deptController {
     @Autowired
     private deptService deptService;
+    @Autowired
+    private empService empService;
 
     @RequestMapping("list")
     @ResponseBody
@@ -25,7 +29,7 @@ public class deptController {
         pageModel.setPageTotal(total);
         //获取数据
         List<DeptModel> deptList = deptService.getAll(dqm, pageModel);
-        deptList.forEach(deptModel -> System.out.println(deptList));
+        //deptList.forEach(deptModel -> System.out.println(deptList));
         pageModel.setRows(deptList);
         return pageModel;
     }
@@ -63,9 +67,13 @@ public class deptController {
 
     @RequestMapping("del")
     @ResponseBody
-    public String del(Integer id) {
-        System.out.println(id);
+    public Integer del(Integer id) {
+        Integer empCount = empService.getDeptCount(id);
+        if (empCount > 0){
+            return empCount;
+        }
         deptService.del(id);
-        return "delOk";
+        empCount=0;
+        return empCount;
     }
 }

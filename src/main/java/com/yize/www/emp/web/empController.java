@@ -25,6 +25,13 @@ public class empController {
         Integer total = empService.getCount(eqm);
         pageModel.setPageTotal(total);
         //获取信息
+
+        /*if (eqm.getDeptid()!=null){
+            System.out.println("！！！！！！！！得到部门id");
+            List<EmpModel> deptAntEmp = deptService.findDeptAntEmp(eqm.getDeptid());
+            pageModel.setRows(deptAntEmp);
+        }else{
+        }*/
         List<EmpModel> empAndDept = empService.getAll(eqm, pageModel);
         pageModel.setRows(empAndDept);
         return pageModel;

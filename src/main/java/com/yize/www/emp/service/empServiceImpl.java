@@ -33,7 +33,11 @@ public class empServiceImpl implements empService{
         /*去重*/
         //example.setDistinct(true);
         //查询数据
-        List<EmpModel> empAndDept = empModelMapper.getEmpAndDept(example);
+        System.out.println("得到部门id="+eqm.getDeptid());
+        System.out.println("得到name="+eqm.getName());
+        System.out.println("得到电话="+eqm.getTel());
+        System.out.println("得到性别="+eqm.getGender());
+        List<EmpModel> empAndDept = empModelMapper.getEmpAndDept(eqm);
         /*for (int i=0 ; i<empAndDept.size();i++){
             //离职时间为空视图赋值”在职“，不为空赋值日期
             if (empAndDept.get(i).getOuttime()==null){
@@ -53,5 +57,10 @@ public class empServiceImpl implements empService{
     @Override
     public void del(Integer id) {
         empModelMapper.deleteByPrimaryKey(id);
+    }
+
+    @Override
+    public Integer getDeptCount(Integer id) {
+        return empModelMapper.getDeptCount(id);
     }
 }

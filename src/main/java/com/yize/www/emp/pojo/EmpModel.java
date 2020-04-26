@@ -7,6 +7,7 @@ import org.springframework.format.annotation.DateTimeFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class EmpModel {
     /*-----------------------数据字典-----------------------------*/
@@ -138,5 +139,27 @@ public class EmpModel {
                 ", deptid=" + deptid + '\'' +
                 ", dm=" + dm.getId() + dm.getName() +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        EmpModel empModel = (EmpModel) o;
+        return Objects.equals(genderView, empModel.genderView) &&
+                Objects.equals(id, empModel.id) &&
+                Objects.equals(name, empModel.name) &&
+                Objects.equals(tel, empModel.tel) &&
+                Objects.equals(gender, empModel.gender) &&
+                Objects.equals(email, empModel.email) &&
+                Objects.equals(intime, empModel.intime) &&
+                Objects.equals(outtime, empModel.outtime) &&
+                Objects.equals(deptid, empModel.deptid) &&
+                Objects.equals(dm, empModel.dm);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(genderView, id, name, tel, gender, email, intime, outtime, deptid, dm);
     }
 }

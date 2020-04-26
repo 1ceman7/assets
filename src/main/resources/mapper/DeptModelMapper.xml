@@ -181,4 +181,32 @@
       tel = #{tel,jdbcType=VARCHAR}
     where id = #{id,jdbcType=INTEGER}
   </update>
+
+  <resultMap id="findEmpAndDep" type="com.yize.www.dept.pojo.DeptModel" >
+    <id column="id" property="id" jdbcType="INTEGER" />
+    <result column="name" property="name" jdbcType="VARCHAR" />
+    <result column="tel" property="tel" jdbcType="VARCHAR" />
+    <!-- 关联关系: 一对多 （集合） property: 容器属性名称  ofType:容器中的泛型类型 -->
+    <collection property="EmpList" ofType="com.yize.www.emp.pojo.EmpModel">
+      <id column="emp_id" property="id"/>
+      <result column="emp_name" property="name"/>
+      <result column="emp_tel" property="tel"/>
+      <result column="gender" property="gender"/>
+      <result column="email" property="email"/>
+      <result column="inTime" property="intime"/>
+      <result column="outTime" property="outtime"/>
+      <result column="deptId" property="deptid"/>
+    </collection>
+  </resultMap>
+  <select id="findEmp" resultMap="findEmpAndDep">
+		SELECT
+			d.name,e.id
+			emp_id,emp_name,emp_tel,gender,email,intime,outTime,deptId
+		FROM
+			dept d,emp e
+		WHERE
+			e.deptId = #{id}
+		and
+		    d.id = e.deptId
+	</select>
 </mapper>

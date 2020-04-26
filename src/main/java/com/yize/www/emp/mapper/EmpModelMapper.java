@@ -2,15 +2,16 @@ package com.yize.www.emp.mapper;
 
 import com.yize.www.emp.pojo.EmpModel;
 import com.yize.www.emp.pojo.EmpModelExample;
-import java.util.List;
 import org.apache.ibatis.annotations.Param;
 import org.springframework.stereotype.Repository;
+
+import java.util.List;
 
 @Repository
 public interface EmpModelMapper {
     int countByExample(EmpModelExample example);
 
-    List<EmpModel> getEmpAndDept(EmpModelExample example);
+    List<EmpModel> getEmpAndDept(EmpModel empModel);
 
     int deleteByExample(EmpModelExample example);
 
@@ -32,5 +33,7 @@ public interface EmpModelMapper {
 
     int updateByPrimaryKey(EmpModel record);
 
+
+    Integer getDeptCount(Integer id);
 
 }

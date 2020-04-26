@@ -5,6 +5,8 @@ import com.yize.www.dept.pojo.DeptModel;
 import com.yize.www.dept.pojo.DeptModelExample;
 import com.yize.www.dept.pojo.DeptModelExample.Criteria;
 import com.yize.www.dept.pojo.DeptQueryModel;
+import com.yize.www.emp.mapper.EmpModelMapper;
+import com.yize.www.emp.pojo.EmpModel;
 import com.yize.www.utils.PageModel;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -17,6 +19,8 @@ import java.util.List;
 public class deptServiceImpl implements deptService {
     @Autowired
     private DeptModelMapper dmp;
+    @Autowired
+    private EmpModelMapper empModelMapper;
     //获取总数
     @Override
     public Integer getCount(DeptQueryModel gqm) {
@@ -63,8 +67,19 @@ public class deptServiceImpl implements deptService {
     }
 
     @Override
-    public void del(Integer id) {
-        dmp.deleteByPrimaryKey(id);
+    public Integer del(Integer id) {
+
+        int i = dmp.deleteByPrimaryKey(id);
+        return i;
+    }
+
+    @Override
+    public List<EmpModel> findDeptAntEmp(Integer id) {
+        System.out.println("查询部门="+id);
+        List<EmpModel> empList = dmp.findEmp(id);
+        //empList.forEach(System.out::println);
+        empList.forEach(empModel -> System.out.println(empModel));
+        return empList;
     }
 
 }

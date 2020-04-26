@@ -7,6 +7,10 @@ var td1 = "";
 var span = "";
 var queryName = "";
 var queryTel = "";
+var queryGender = "";
+var queryEmail = "";
+var queryDeptName = "";
+var queryIntime = "";
 var total = "";
 var inTotal = "";
 var num = "";
@@ -18,19 +22,25 @@ var appendTd = function (tr, item, prop) {
 }
 
 /* 展示数据 */
-function getAll() {
+function getEmp() {
 	$.ajax({
 		url:"/Test_assets/emp/list",
 		method:"POST",
 		async : false,
 		data:{
-			/*name:queryName,
-			tel:queryTel,*/
+			name:queryName,
+			tel:queryTel,
+			gender:queryGender,
+			intime:queryIntime,
+			//email:queryEmail,
 			//pageNum: pageNum,
             //pageCount: pageCount
+			deptid:queryDeptName,
 		},
 		success:function (pageModel) {
+
 			var empList = pageModel.rows;
+
 			var empId = empList.id;
 			pageNum = pageModel.pageNum;
 			maxPageNum = pageModel.maxPageNum;
@@ -48,22 +58,25 @@ function getAll() {
 			total.html(pageTotal);
 			inTotal.html(pageNum+"/"+maxPageNum);
 				tb.datagrid({
-					data:
-						 empList,
+					data:empList,
 					columns:[[
-						{field:'id',title:'编号',width:'5%',align:"center"},
-						{field:'name',title:'姓名',width:'12%',align:"center"},
+						/*width="5%" height="30"*/
+						{field:'id',title:'编号',width:'5%',height:"30",align:"center"},
+						{field:'name',title:'姓名',width:'8%',align:"center"},
 						{field:'tel',title:'电话',width:'15%',align:"center"},
 						{field:'genderView',title:'性别',width:'5%',align:"center"},
 						{field:'email',title:'email',width:'20%',align:"center"},
-						{field:'intime',title:'入职时间',width:'15%',align:"center"},
-						{field:'outtime',title:'离职时间',width:'15%',align:"center", formatter: function( value ) {
+						{field:'intime',title:'入职时间',width:'13%',align:"center"},
+						{field:'outtime',title:'离职时间',width:'13%',align:"center", formatter: function( value ) {
 								if( !value ) {
 									return '在职'
 								}
 								return value
 							}},
-						{field:'123',title:'操作',width:'15.5%',align:"center", formatter: function( value,row,index) {
+						{field:'1',title:'所属部门',width:'10%',align:"center",formatter: function(value,rows ) {
+								return rows.dm['name'];
+							}},
+						{field:'123',title:'操作',width:'13.59%',align:"center", formatter: function( value,row,index) {
 								var url ='/Test_assets/assets/jsps/department/input.html';
 								var str  ='<a href='+url+'?id='+row.id+' class="xiu">修改</a>&nbsp;&nbsp;' +
 									'<a href="javascript:void(0)" id="del" onclick="dele('+row.id+')" class="xiu"  >删除</a>'
@@ -72,7 +85,6 @@ function getAll() {
 
 					]]
 				});
-
 		/*/!* 为字段赋值*!/
 			for (var i = 0; i < empList.length; i++){
 			//将id赋值到全局变量里，做删除功能时会用到。
@@ -108,8 +120,16 @@ function getQuery() {
 	$('#query').live('click','a',function(){
 		queryName = $('#queryName').val();
 		queryTel = $('#queryTel').val();
-		alert('输入的查询信息是：'+queryName+queryTel);
-		getAll();
+		queryGender = $('#queryGender').val();
+		if (queryGender=='-1'){
+			queryGender = null;
+		}
+		queryEmail = $('#queryEmail').val();
+		queryDeptName = $("#queryDept").combobox("getValue");
+		alert('输入的查询信息是：'+queryName+queryTel+queryDeptName+queryIntime);
+
+		getEmp();
+
 	})
 }
 
@@ -135,7 +155,7 @@ function dele(data) {
 }
 
 	//部门查询下拉框
-function onLoadRead() {
+/*function onLoadRead() {
 		$.ajax({
 			type:"post",
 			url:"/Test_assets/dept/list",
@@ -158,4 +178,26 @@ function onLoadRead() {
 				}
 			},
 		});
+}*/
+function getQueryDept(){
+	$.ajax({
+	url:"/Test_assets/dept/list",
+	method:"POST",
+	async : false,
+		success:function (pageModel) {
+			var deptList = pageModel.rows;
+			$("#queryDept").combobox({
+				data:deptList,
+				valueField:'id',
+				textField:'name',
+				panelHeight:'auto',
+				width:'50%',align:"center",
+				formatter:function(row){
+					return '<span class="kuan">'+row.name+'</span>';
+				}
+			})
+		}
+	})
 }
+
+
